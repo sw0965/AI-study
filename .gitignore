@@ -1,0 +1,20 @@
+# ignore model_save, ModelCheckpoint and tensorboard files
+*.h5
+*.hdf5
+*v2
+*profile-empty
+*trace
+*csv
+*dat
+*json
+*mp4
+*jpg
+*npy
+*db
+*MOV
+*exe
+*zip
+*.png
+# directories
+/train/
+/validation/
