@@ -17,115 +17,29 @@
 
 
 def solution(n, lost, reserve):
-    before_borrow = range(n)
-    print(before_borrow)
-    answer = 0
-    return answer
 
+    # 전체 수 - 잃어버린 수
+    cnt = n - len(lost)
 
-n = 5
-lost = [2,  4]
-reserve = [1, 3]
+    # 정렬 해주기 lost 가 [3, 1], reserve 가 [2, 4] 들어 왔을 시 정렬이 되면 2개의 값을 뽑을 수 있지만 정렬이 되어있지 않으면 하나 만 가능하다.
+    lost.sort()
+    reserve.sort()
 
-# 전체 인원중 도둑맞지 않은 아이들 찾기
-non_stolen = [x for x in range(1, n+1) if x not in lost]
-print('도둑안당한 아이들', non_stolen)
+    for i in range(len(lost)):
+        for j in range(len(reserve)):
+            if lost[i] == reserve[j]:
+                cnt += 1
+                lost[i] = reserve[j] = -1
+                break
 
+    # 도난당한 체육복에서 -1이 아니면 여분 체육복 속 도난 당한옷 사이즈 +- 1인걸 찾고 있다면 -1로 변경 해준 뒤 카운트 추가 해준다.
+    for k in range(len(lost)):
+        for l in range(len(reserve)):
+            if lost[k] > 0:
+                if lost[k] + 1 == reserve[l] or lost[k] - 1 == reserve[l]:
 
+                    lost[k] = reserve[l] = -1
 
-# 옷 갯수 확인하기 (자기꺼 제외한 빌려줄 수 있는 옷)
-reserve = [x for x in reserve if x in non_stolen]
-print('옷 여부', reserve)
+                    cnt += 1
 
-
-
-
-
-#
-# check_cloths = [x for x in reserve if x in lost]    # 2벌 챙긴애중에 도둑맞은애 찾기
-#
-# count_cloths = [x for x in reserve if x not in check_cloths]    #
-#
-# print(check_cloths)
-# print(count_cloths)
-#
-#
-# cloths = count_cloths * 2
-# print(cloths)
-# # for i in cloths:
-
-
-# check_cloth = [x for x in cloths if x not in lost]
-# print(cloths)
-# print(check_cloth)
-
-
-'''
-one = [x for x in range(1, 5+1) if x not in lost]
-print('도둑맞은애 제외', one)
-
-one = [x for x in one if x not in reserve]
-print('자기 옷만 챙긴애', one)
-
-cloths = one+(reserve*2)
-# print(one)
-print("옷 여부 상태", cloths)
-'''
-# reserve = (reserve * 2) + ()
-# print(reserve)
-
-'''all = [i for i in range(1, n+1)]
-print(all)
-for m in lost:
-
-    all.remove(m)
-print(all)
-
-p_borrow = {}
-student = 0
-b_range = []
-borrow = 0
-for i in lost:
-
-    # print(i)
-    borrow_down = i-1
-    borrow_up = i+1
-    if borrow_up <= n and borrow_down > 0:
-        p_borrow[i] = [borrow_down, borrow_up]
-
-live = []
-print('총인원', n)
-print('잃어버린 애들', lost)
-print('빌려줄수 있는 애들', reserve)
-print('-------------------------------')
-
-for j in p_borrow:
-    print('잃어버린 애들이 입을수 있는 사이즈들', p_borrow)
-    # print('g',j)
-    for k in reserve:
-        print('빌려주는 애', k)
-        if k in p_borrow[j]:
-            # print('빌려줄애 찾은애', k)
-            # live = live.append[j]
-            p_borrow[j] = []
-            reserve.append(j)
-
-
-result = all + reserve
-
-print(p_borrow)
-print(all)
-print('체육활동 가능한 사람들', reserve)
-print('체육활동 가능한 사람들', len(reserve))
-
-print('결과: ', list(set(result)))'''
-
-# print(j)
-# print(live)
-# print(b_range)
-
-
-# all_students_list.remove([i for i in lost])
-#
-# print(all_students_list)
-
+    return cnt
