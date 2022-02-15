@@ -17,24 +17,26 @@
 from itertools import combinations
 import math
 
+com_list = []
+
+
+def primenumber(x):
+    for i in range(2, int(math.sqrt(x) + 1)):  # 2부터 x의 제곱근까지의 숫자 (시간을 줄이기 위한 제곱근까지의 수)
+        if x % i == 0:  # 나눠떨어지는 숫자가 있으면 소수가 아님
+            return False
+    return True
+
+
 def solution(nums):
-    # answer = -1
-    print(list(combinations(nums, 3)))
+    answer = 0
+
     comb = list(combinations(nums, 3))
     for i in comb:
-        print('i',i)
         sum_comb = sum(i)
-        print(sum_comb)
-        # for j in range(2, int(math.sqrt(sum_comb))+1):
-        for j in range(2, sum_comb):
-            if sum_comb % j == 0:
-                return False
+        com_list.append(sum_comb)
 
-        return sum_comb
+    for y in com_list:
+        if primenumber(y) is True:
+            answer += 1
 
-
-    # return answer
-
-
-nums = [1,2,7,6,4]
-print(solution(nums))
+    return answer
